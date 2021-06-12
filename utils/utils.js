@@ -1,7 +1,9 @@
-import { UserVoites } from '../models/Poles'
-const MapSubArrsy = (users) => () => {
-  return users.map(() => {
-    return new UserVoites(users.id, users.data().Username)
-  })
+const BaseCollection = () => 'voites'
+const SubCollection = () => 'UserVoites'
+
+const DateToTimestamp = (strDate) => {
+  const datum = Date.parse(strDate)
+  return datum / 1000 + 2678400
 }
-export default MapSubArrsy
+
+export default { BaseCollection, DateToTimestamp, SubCollection }

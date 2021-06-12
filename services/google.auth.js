@@ -1,42 +1,38 @@
 import firebase from 'firebase'
-const GoogleAuthSingIn = () => {
+import { Voites } from '../models/voites'
+const GoogleAuthSingIn = async () => {
   const provider = new firebase.auth.GoogleAuthProvider()
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then((result) => {
-      const credential = result.credential
-      const token = credential.accessToken
-      window.console.log(token)
-      const user = result.user
-      window.console.log(user.emailVerified)
-      window.console.log(user.displayName)
-    })
-    .catch((error) => {
-      //   // Handle Errors here.
-      const errorCode = error.code
-      const errorMessage = error.message
-      //   // The email of the user's account used.
-      const email = error.email
-      //   // The firebase.auth.AuthCredential type that was used.
-      const credential = error.credential
-      window.console.log(email)
-      window.console.log(errorCode)
-      window.console.log(errorMessage)
-      window.console.log(credential)
-    })
+  const result = await firebase.auth().signInWithPopup(provider)
+  const credential = result.credential
+  const token = credential.accessToken
+  window.console.log(token)
+  const user = result.user
+  if (user.emailVerified) {
+    return {
+      token: credential.accessToken,
+      success: user.emailVerified,
+      user: new Voites(await GetUidSingIn(), user.displayName),
+    }
+  }
 }
 
-const SignOut = () => {
-  firebase
-    .auth()
-    .signOut()
-    .then(() => {
-      window.console.log('SignOut')
-    })
-    .catch((error) => {
-      window.console.log(error.message)
-    })
+const SignOut = async () => {
+  try {
+    await firebase.auth().signOut()
+    return { success: true }
+  } catch (error) {
+    return { success: false }
+  }
 }
 
-export default { GoogleAuthSingIn, SignOut }
+const GetUidSingIn = async () => {
+  const user = await firebase.auth().currentUser
+  if (user) {
+    const uid = user.uid
+    return uid
+  } else {
+    return null
+  }
+}
+
+export default { GoogleAuthSingIn, SignOut, GetUidSingIn }

@@ -1,50 +1,64 @@
-// Services.FecthPoles('voites').then((result) => {
-//     Promise.all(result).then((values) => {
-//       this.Item = values
-//     })
-//   })
-
-// import firebase from 'firebase'
-// import { Poles, UserVoites } from '../models/Poles'
-// const FecthPoles = async (CollectionName) => {
-//   const PolesDoc = await FecthCollection(CollectionName)
-//   try {
-//     const Result = PolesDoc.map(async (doc) => {
-//       const arrUser = []
-//       const UserVoiteDoc = await FecthCollection(
-//         `${CollectionName}/${doc.id}/UserVoites`
-//       )
-
-//       UserVoiteDoc.forEach((element) => {
-//         arrUser.push(new UserVoites(element.id, element.data().Username))
-//       })
-
-//       return new Poles(
-//         doc.id,
-//         `${CollectionName}/${doc.id}/UserVoites`,
-//         doc.data().Description,
-//         doc.data().ImageURL,
-//         doc.data().Exp,
-//         doc.data().TimeStamp,
-//         arrUser
-//       )
-//     })
-//     return { success: true, massage: 'Get data item.', data: Result }
-//   } catch (error) {
-//     return { success: true, massage: error, data: [] }
-//   }
-// }
-
-// const FecthCollection = async (subcollection) => {
-//   const snapshot = await firebase.firestore().collection(subcollection).get()
-//   return snapshot.docs
-// }
-// export default { FecthPoles }
-
+import Services from '../../services/manage.firestore'
+import Utils from '../../utils/utils'
+import { Poles } from '../../models/poles'
 export default {
   namespaced: true,
-  state: {},
-  mutations: {},
-  actions: {},
-  getters: {},
+  state: {
+    ListPoles: [],
+  },
+  mutations: {
+    FETCH_LIST_POLES(state, poles) {
+      state.ListPoles = poles
+    },
+    INSERT_NEWPOLE(state, pole) {
+      state.ListPoles.push(pole)
+    },
+  },
+  actions: {
+    ACTION_FETCH_LISTPOLES({ commit }) {
+      Services.FecthPoles(Utils.BaseCollection)
+        .then((res) => {
+          if (res.status) {
+            Promise.all(res.data).then((values) => {
+              commit('FETCH_LIST_POLES', values)
+              return { success: true, massage: 'New pole create success.' }
+            })
+          } else {
+            return { success: false, massage: 'Created new pole failed.' }
+          }
+        })
+        .catch((err) => {
+          return { success: false, massage: err }
+        })
+    },
+    async ACTION_CREATE_NEWPOLE({ commit }, payload) {
+      const response = await Services.CreateNewPoles({
+        collection: Utils.BaseCollection,
+        pole: new Poles(
+          payload.PoleId,
+          payload.Path,
+          payload.Description,
+          Utils.DateToTimestamp(payload.Exp),
+          payload.TimeStamp,
+          payload.PoleName,
+          payload.By,
+          payload.ArrUser
+        ),
+      })
+      if (response.success) {
+        commit('INSERT_NEWPOLE', payload)
+      }
+      if (response) {
+        return response
+      }
+    },
+  },
+  getters: {
+    GET_POLES(state) {
+      return state.permission
+    },
+    GET_POLE_BYID(state, PoleId) {
+      return state.ListPoles.filter((el) => el.PoleId === PoleId)
+    },
+  },
 }

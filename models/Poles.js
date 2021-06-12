@@ -1,18 +1,21 @@
 export class Poles {
-  constructor(PoleId, Path, Description, ImageURL, Exp, TimeStamp, ArrUser) {
+  constructor(
+    PoleId,
+    Path,
+    Description,
+    Exp,
+    TimeStamp,
+    PoleName,
+    By,
+    ArrUser
+  ) {
     this.PoleId = PoleId
     this.Path = Path
     this.Description = Description
-    this.ImageURL = ImageURL
     this.Exp = Exp
     this.TimeStamp = TimeStamp
+    this.PoleName = PoleName
+    this.By = By
     this.ArrUser = ArrUser
-  }
-}
-
-export class UserVoites {
-  constructor(UserId, Username) {
-    this.UserId = UserId
-    this.Username = Username
   }
 }
