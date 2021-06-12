@@ -1,31 +1,42 @@
 import firebase from 'firebase'
-const GoogleAuth = () => {
+const GoogleAuthSingIn = () => {
   const provider = new firebase.auth.GoogleAuthProvider()
-  provider.setCustomParameters({
-    login_hint: 'user@psu.ac.th',
-  })
   firebase
     .auth()
     .signInWithPopup(provider)
     .then((result) => {
-      //   /** @type {firebase.auth.OAuthCredential} */
-      //   const credential = result.credential
-      //   // This gives you a Google Access Token. You can use it to access the Google API.
-      //   const token = credential.accessToken
-      //   // The signed-in user info.
-      //   const user = result.user
-      // ...
+      const credential = result.credential
+      const token = credential.accessToken
+      window.console.log(token)
+      const user = result.user
+      window.console.log(user.emailVerified)
+      window.console.log(user.displayName)
     })
     .catch((error) => {
       //   // Handle Errors here.
-      //   const errorCode = error.code
-      //   const errorMessage = error.message
+      const errorCode = error.code
+      const errorMessage = error.message
       //   // The email of the user's account used.
-      //   const email = error.email
+      const email = error.email
       //   // The firebase.auth.AuthCredential type that was used.
-      //   const credential = error.credential
+      const credential = error.credential
+      window.console.log(email)
+      window.console.log(errorCode)
+      window.console.log(errorMessage)
+      window.console.log(credential)
+    })
+}
+
+const SignOut = () => {
+  firebase
+    .auth()
+    .signOut()
+    .then(() => {
+      window.console.log('SignOut')
+    })
+    .catch((error) => {
       window.console.log(error.message)
     })
 }
 
-export default GoogleAuth
+export default { GoogleAuthSingIn, SignOut }
