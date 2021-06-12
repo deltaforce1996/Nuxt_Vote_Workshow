@@ -41,4 +41,10 @@
 // }
 // export default { FecthPoles }
 
-// ggg
+export default {
+  namespaced: true,
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {},
+}

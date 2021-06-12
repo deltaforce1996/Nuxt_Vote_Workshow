@@ -1,9 +1,11 @@
-// import Vue from 'vue'
-// import Vuex from 'vuex'
+import Vuex from 'vuex'
 
-// Vue.use(Vuex)
+const createStore = () => {
+  return new Vuex.Store({
+    state: {},
+    mutations: {},
+    modules: {},
+  })
+}
 
-// export default new Vuex.Store({
-//   namespaced: true,
-//   modules: {},
-// })
+export default createStore
