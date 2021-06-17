@@ -1,5 +1,5 @@
 const BaseCollection = () => 'voites'
-const SubCollection = () => 'UserVoites'
+const SubCollection = () => 'uservoite'
 
 const DateToTimestamp = (strDate) => {
   const datum = Date.parse(strDate)

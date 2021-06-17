@@ -15,41 +15,59 @@ export default {
     },
   },
   actions: {
-    ACTION_FETCH_LISTPOLES({ commit }) {
-      Services.FecthPoles(Utils.BaseCollection)
-        .then((res) => {
-          if (res.status) {
-            Promise.all(res.data).then((values) => {
-              commit('FETCH_LIST_POLES', values)
-              return { success: true, massage: 'New pole create success.' }
-            })
-          } else {
-            return { success: false, massage: 'Created new pole failed.' }
-          }
-        })
-        .catch((err) => {
-          return { success: false, massage: err }
-        })
+    async ACTION_FETCH_LISTPOLES({ commit }) {
+      window.console.log('ACTION_FETCH_LISTPOLES')
+      try {
+        const voites = await Services.FecthPoles('voites')
+        const uservoite = await Services.FecthVoites('uservoite')
+        const result = voites.map(
+          (el) =>
+            new Poles(
+              el.PoleId,
+              el.Description,
+              el.Exp,
+              el.TimeStamp,
+              el.PoleName,
+              el.By,
+              el.Options,
+              uservoite.filter((user) => user.RefVoite === el.PoleId)
+            )
+        )
+        return {
+          success: true,
+          massage: 'Fecth all pole success.',
+          data: result,
+        }
+      } catch (error) {
+        return {
+          success: false,
+          massage: 'Fecth failed.',
+          data: [],
+        }
+      }
     },
     async ACTION_CREATE_NEWPOLE({ commit }, payload) {
-      const response = await Services.CreateNewPoles({
-        collection: Utils.BaseCollection,
-        pole: new Poles(
-          payload.PoleId,
-          payload.Path,
-          payload.Description,
-          Utils.DateToTimestamp(payload.Exp),
-          payload.TimeStamp,
-          payload.PoleName,
-          payload.By,
-          payload.ArrUser
-        ),
-      })
-      if (response.success) {
-        commit('INSERT_NEWPOLE', payload)
-      }
-      if (response) {
-        return response
+      try {
+        const response = await Services.CreateNewPoles({
+          collection: Utils.BaseCollection(),
+          pole: new Poles(
+            null,
+            payload.Description,
+            parseInt(payload.Exp),
+            parseInt(payload.TimeStamp),
+            payload.PoleName,
+            payload.By,
+            payload.Options
+          ),
+        })
+        if (response.success) {
+          commit('INSERT_NEWPOLE', payload)
+        }
+        if (response) {
+          return response
+        }
+      } catch (error) {
+        return { success: false, massage: error }
       }
     },
   },

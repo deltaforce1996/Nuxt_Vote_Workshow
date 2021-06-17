@@ -25,8 +25,8 @@ const SignOut = async () => {
   }
 }
 
-const GetUidSingIn = async () => {
-  const user = await firebase.auth().currentUser
+const GetUidSingIn = () => {
+  const user = firebase.auth().currentUser
   if (user) {
     const uid = user.uid
     return uid
@@ -35,4 +35,4 @@ const GetUidSingIn = async () => {
   }
 }
 
-export default { GoogleAuthSingIn, SignOut, GetUidSingIn }
+export default { GoogleAuthSingIn, SignOut /*, GetUidSingIn */ }
