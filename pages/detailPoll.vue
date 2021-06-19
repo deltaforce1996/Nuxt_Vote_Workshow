@@ -9,19 +9,29 @@
       </div>
     </div>
     <div>
-      <button class="btn-add-poll" @click="getToVote">+ Add Poll</button>
+      <button class="btn-edit-poll" @click="getToEdit">Edit</button>
     </div>
     <div>
       <h1 class="title-main">what to eat ?</h1>
     </div>
     <div class="text-name">
-      <span class="poll-title" to="/detailPoll">เที่ยงนี้กินไรดี</span>
-      <span class="time-end">(11.45 นาที)</span>
-      <button class="btn-add-poll" @click="getToDetail">Detail</button>
+      <span class="poll-title">เที่ยงนี้กินไรดี</span>
     </div>
     <div class="text-name">
-      <span class="poll-title">เที่ยงนี้กินไรดี</span>
-      <span class="time-end">(10.45 นาที)</span>
+      <span class="poll-title">ข้าวผัด</span>     
+    </div>
+    <div>
+      <span class="poll-title">ส้มตำ</span>
+    </div>
+    <div>
+      <span class="poll-title">ก๊วยเตี๊ยว</span>
+    </div>
+    <div>
+      <span class="poll-title">ยำวุ้นเส้น</span>
+    </div>
+    <div>
+        <label for="timer">Set Time :</label>
+        <span class="poll-time" >20 นาที</span>
     </div>
   </div>
 </template>
@@ -31,13 +41,9 @@ export default {
     getLogout() {
       this.$router.push('/LoginPage')
     },
-    getToVote() {
+    getToEdit() {
       this.$router.push('/addPoll')
     },
-    getToDetail(){
-       this.$router.push('/detailPoll')
-
-    }
   },
 }
 </script>
@@ -76,7 +82,7 @@ export default {
   cursor: pointer;
   border-radius: 6px;
 }
-.btn-add-poll {
+.btn-edit-poll {
   background-color: #87cefa;
   border: none;
   color: white;
