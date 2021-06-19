@@ -9,18 +9,18 @@
       </div>
     </div>
     <div>
-      <button class="btn-add-poll" @click="getToVote" >+ Add Poll</button>
+      <button class="btn-add-poll" @click="getToVote">+ Add Poll</button>
     </div>
     <div>
       <h1 class="title-main">what to eat ?</h1>
     </div>
     <div class="text-name">
-        <span class="poll-title">เที่ยงนี้กินไรดี</span>
-        <span class="time-end">(11.45 นาที)</span>
+      <span class="poll-title">เที่ยงนี้กินไรดี</span>
+      <span class="time-end">(11.45 นาที)</span>
     </div>
     <div class="text-name">
-        <span class="poll-title">เที่ยงนี้กินไรดี</span>
-        <span class="time-end">(10.45 นาที)</span>
+      <span class="poll-title">เที่ยงนี้กินไรดี</span>
+      <span class="time-end">(10.45 นาที)</span>
     </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
     getLogout() {
       this.$router.push('/LoginPage')
     },
-    getToVote(){
+    getToVote() {
       this.$router.push('/addPollVote')
     },
   },
@@ -59,7 +59,7 @@ export default {
   justify-content: right;
 }
 .btn-logout {
-  background-color: #f44336; 
+  background-color: #f44336;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -72,7 +72,7 @@ export default {
   border-radius: 6px;
 }
 .btn-add-poll {
-  background-color: #87cefa; 
+  background-color: #87cefa;
   border: none;
   color: white;
   padding: 10px 20px;

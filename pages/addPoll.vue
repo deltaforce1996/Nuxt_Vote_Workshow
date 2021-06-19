@@ -12,19 +12,23 @@
       <h1 class="title-main">what to eat ?</h1>
     </div>
     <div>
-      <form >
-        <label >Poll Question</label>
-        <input type="text"  name="questiontxt" placeholder="Enter poll question">
+      <form>
+        <label>Poll Question</label>
+        <input
+          type="text"
+          name="questiontxt"
+          placeholder="Enter poll question"
+        />
 
-        <label >Option</label>
-        <input type="text"  name="optiontxt" placeholder="Enter an option">
-        <input type="text"  name="optiontxt" placeholder="Enter an option">
-        <input type="text"  name="optiontxt" placeholder="Enter an option">
-        
+        <label>Option</label>
+        <input type="text" name="optiontxt" placeholder="Enter an option" />
+        <input type="text" name="optiontxt" placeholder="Enter an option" />
+        <input type="text" name="optiontxt" placeholder="Enter an option" />
+
         <label for="timer">Set Time :</label>
-        <input type="date" id="itmer" name="timer">
-      
-        <input type="submit" value="Submit">
+        <input id="itmer" type="date" name="timer" />
+
+        <input type="submit" value="Submit" />
         <button class="btn-cancle" @click="goCancle">Logout</button>
       </form>
     </div>
@@ -89,7 +93,7 @@ export default {
   cursor: pointer;
   border-radius: 6px;
 }
-.btn-cancle{
+.btn-cancle {
   background-color: #f44336; /* Green */
   border: none;
   color: white;
@@ -102,5 +106,4 @@ export default {
   cursor: pointer;
   border-radius: 6px;
 }
-
 </style>
