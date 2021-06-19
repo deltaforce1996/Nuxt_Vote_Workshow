@@ -31,7 +31,7 @@ export default {
       this.$router.push('/LoginPage')
     },
     getToVote() {
-      this.$router.push('/addPollVote')
+      this.$router.push('/addPoll')
     },
   },
 }

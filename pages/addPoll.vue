@@ -29,7 +29,7 @@
         <input id="itmer" type="date" name="timer" />
 
         <input type="submit" value="Submit" />
-        <button class="btn-cancle" @click="goCancle">Logout</button>
+        <button class="btn-cancle" @click="goCancle">cancle</button>
       </form>
     </div>
   </div>
@@ -38,9 +38,12 @@
 <script>
 export default {
   methods: {
-    goCancle() {
+    getLogout() {
       this.$router.push('/LoginPage')
     },
+    goCancle(){
+      this.$router.push('/mainpage')
+    }
   },
 }
 </script>
