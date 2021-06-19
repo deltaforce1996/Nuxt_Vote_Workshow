@@ -70,6 +70,15 @@ export default {
         return { success: false, massage: error }
       }
     },
+    async ACTION_DELETE_POLE({ commit }, documentPoleId) {
+      window.console.log('ACTION_DELETE_POLE => ' + documentPoleId)
+      try {
+        const response = await Services.DeletePole(documentPoleId)
+        if (response.success) {
+          return response
+        }
+      } catch (error) {}
+    },
   },
   getters: {
     GET_POLES(state) {

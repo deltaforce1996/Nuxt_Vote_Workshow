@@ -63,6 +63,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -86,6 +87,24 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js',
     }
+  },
+  computed: {
+    ...mapGetters({
+      // // users
+      // GET_USER: 'MODULE_USER/GET_USER_SINGIN',
+      // GET_VALIDATION_PERMISSION: 'MODULE_USER/GET_VALIDATION_PERMISSION',
+    }),
+  },
+  mounted() {
+    // this.ACTION_USER_ID()
+  },
+  methods: {
+    ...mapActions({
+      // // users
+      // ACTION_SINGIN: 'MODULE_USER/ACTION_SINGIN',
+      // ACTION_SINGOUT: 'MODULE_USER/ACTION_SINGOUT',
+      // ACTION_USER_ID: 'MODULE_USER/ACTION_USER_ID',
+    }),
   },
 }
 </script>

@@ -5,6 +5,7 @@
     <v-btn @click="EventValidatetion">Validatetion User</v-btn>
     <v-btn @click="EventFecthPole">Fecth Pole</v-btn>
     <v-btn @click="EventCreateNewPole">New Pole</v-btn>
+    <v-btn @click="EventDeletePole('Oq0afvH0Tjh1m7cLYTLd')">Delete Pole</v-btn>
     <v-btn @click="EventVoite">Voite</v-btn>
   </v-container>
 </template>
@@ -35,6 +36,7 @@ export default {
       // pole
       ACTION_FETCH_LISTPOLES: 'MODULE_POLE/ACTION_FETCH_LISTPOLES',
       ACTION_CREATE_NEWPOLE: 'MODULE_POLE/ACTION_CREATE_NEWPOLE',
+      ACTION_DELETE_POLE: 'MODULE_POLE/ACTION_DELETE_POLE',
       // Voite
       ACTION_NEW_VOITE_POLE: 'MODULE_VOITE/ACTION_NEW_VOITE_POLE',
     }),
@@ -42,11 +44,16 @@ export default {
       const res = await this.ACTION_SINGIN()
       window.console.log(res.success)
       window.console.log(JSON.stringify(this.GET_USER))
+      this.$cookies.set('cookie-name', this.GET_USER, {
+        path: '/',
+        maxAge: 60 * 60 * 24 * 7,
+      })
     },
-    async EventSignOut() {
-      const res = await this.ACTION_SINGOUT()
-      window.console.log(JSON.stringify(res))
-      // window.console.log(JSON.stringify(this.GET_USER))
+    EventSignOut() {
+      // const res = await this.ACTION_SINGOUT()
+      // window.console.log(JSON.stringify(res))
+      const cookieRes = this.$cookies.get('cookie-name')
+      window.console.log(JSON.stringify(cookieRes))
     },
     async EventCreateNewPole() {
       /* Description,
@@ -93,6 +100,11 @@ export default {
         window.console.log('Out Session ==> ' + this.GET_USER)
         return false
       }
+    },
+    async EventDeletePole(documentPoleId) {
+      if (!this.EventValidatetion()) return
+      const res = await this.ACTION_DELETE_POLE(documentPoleId)
+      window.console.log(res)
     },
   },
 }

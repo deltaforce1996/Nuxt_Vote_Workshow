@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import { Poles } from '../models/poles'
 import { Voites } from '../models/voites'
-// import Utils from '../utils/utils'
+import Utils from '../utils/utils'
 const FecthPoles = async (path) => {
   try {
     const data = []
@@ -21,7 +21,9 @@ const FecthPoles = async (path) => {
       )
     })
     return data
-  } catch (err) {}
+  } catch (err) {
+    return []
+  }
 }
 
 const FecthVoites = async (path) => {
@@ -39,7 +41,9 @@ const FecthVoites = async (path) => {
       )
     })
     return data
-  } catch (err) {}
+  } catch (err) {
+    return []
+  }
 }
 
 const CreateNewPoles = async (payload) => {
@@ -79,25 +83,32 @@ const InsetVoitPole = async (payload) => {
   }
 }
 
-const DeletePole = async (payload) => {
+const DeletePole = async (documentPoleId) => {
+  window.console.log(documentPoleId)
   try {
-    const RefPath = await firebase
+    await firebase
       .firestore()
-      .collection(payload.path)
-      .doc(payload.documentId)
+      .collection(Utils.BaseCollection())
+      .doc(documentPoleId)
       .delete()
-    if (RefPath) {
-      const RefVoite = await firebase
-        .firestore()
-        .collection(payload.uservoite)
-        .where('RefVoite', '==', payload.documentId)
-      const result = await RefVoite.get()
-      result.forEach((doc) => {
-        doc.ref.delete()
-      })
+
+    const RefVoite = await firebase
+      .firestore()
+      .collection(Utils.SubCollection())
+      .where('RefVoite', '==', documentPoleId)
+    const result = await RefVoite.get()
+    result.forEach((doc) => {
+      doc.ref.delete()
+    })
+    return {
+      success: true,
+      massage: 'Delete success.',
     }
   } catch (err) {
-    window.console.log(err)
+    return {
+      success: false,
+      massage: err,
+    }
   }
 }
 

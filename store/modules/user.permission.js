@@ -28,6 +28,12 @@ export default {
         return { success: false, massage: 'Failed.' }
       }
     },
+    async ACTION_USER_ID({ commit }) {
+      const response = await GooglAuthService.GetUidSingIn()
+      if (response) {
+        window.console.log(response)
+      }
+    },
   },
   getters: {
     GET_USER_SINGIN(state) {
