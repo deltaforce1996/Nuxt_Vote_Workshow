@@ -26,6 +26,7 @@
       <div class="text-name">
         <span class="poll-title">{{ item.PoleName }}</span>
         <span class="time-end"> (11.45 นาที)</span>
+        <button class="btn-add-poll" @click="getToDetail">Detail</button>
         <v-btn @click="EventLogVoite(item.Options, item.PoleId, item.Exp)"
           >Voite</v-btn
         >
@@ -113,6 +114,9 @@ export default {
     },
     OnFailed() {
       this.IsLogOpen = false
+    },
+    getToDetail() {
+      this.$router.push('/detailPoll')
     },
   },
 }
