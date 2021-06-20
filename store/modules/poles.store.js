@@ -33,16 +33,16 @@ export default {
               uservoite.filter((user) => user.RefVoite === el.PoleId)
             )
         )
+        commit('FETCH_LIST_POLES', result)
         return {
           success: true,
           massage: 'Fecth all pole success.',
-          data: result,
         }
       } catch (error) {
+        commit('FETCH_LIST_POLES', [])
         return {
           success: false,
           massage: 'Fecth failed.',
-          data: [],
         }
       }
     },
@@ -82,7 +82,7 @@ export default {
   },
   getters: {
     GET_POLES(state) {
-      return state.permission
+      return state.ListPoles
     },
     GET_POLE_BYID(state, PoleId) {
       return state.ListPoles.filter((el) => el.PoleId === PoleId)

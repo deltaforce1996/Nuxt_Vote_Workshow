@@ -28,7 +28,7 @@
         <label for="timer">Set Time :</label>
         <input id="itmer" type="date" name="timer" />
 
-        <input type="submit" value="Submit" />
+        <!-- <input type="submit" value="Submit" /> -->
         <button class="btn-cancle" @click="goCancle">cancle</button>
       </form>
     </div>
@@ -36,14 +36,44 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters({
+      // users
+      GET_USER: 'MODULE_USER/GET_USER_SINGIN',
+    }),
+  },
   methods: {
+    ...mapActions({
+      // pole
+      ACTION_CREATE_NEWPOLE: 'MODULE_POLE/ACTION_CREATE_NEWPOLE',
+    }),
+    async EventNewPole(
+      PoleNameValue,
+      DescriptionValue,
+      ExpValue,
+      ArrayOptions
+    ) {
+      if (!this.EventValidatetion()) return
+      const res = await this.ACTION_CREATE_NEWPOLE({
+        Description: DescriptionValue,
+        Exp: ExpValue,
+        TimeStamp: Date.now(),
+        PoleName: PoleNameValue,
+        By: this.GET_USER.Username,
+        Options: ArrayOptions,
+      })
+      if (res.success) {
+        window.console.log(res.massage)
+      }
+    },
     getLogout() {
       this.$router.push('/LoginPage')
     },
-    goCancle(){
+    goCancle() {
       this.$router.push('/mainpage')
-    }
+    },
   },
 }
 </script>

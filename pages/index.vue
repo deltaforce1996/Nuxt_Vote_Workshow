@@ -4,17 +4,49 @@
       <!-- <Logo /> -->
       <h1 class="title">what to eat ?</h1>
       <div class="links">
-        <a class="button--green" @click="getLogin"> Continue </a>
+        <a class="button--green" @click="EventSignIn"> Continue </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
+  computed: {
+    ...mapGetters({
+      // users
+      GET_USER: 'MODULE_USER/GET_USER_SINGIN',
+    }),
+  },
+  mounted() {
+    this.CheckLogIn()
+  },
   methods: {
-    getLogin() {
-      this.$router.push('/mainPage')
+    ...mapActions({
+      // users
+      ACTION_SINGIN: 'MODULE_USER/ACTION_SINGIN',
+      ACTION_USER_COKKIE: 'MODULE_USER/ACTION_USER_COKKIE',
+    }),
+    CheckLogIn() {
+      const cookieRes = this.$cookies.get('cookie-name')
+      window.console.log(cookieRes)
+      if (cookieRes) {
+        this.ACTION_USER_COKKIE(cookieRes)
+        this.$router.push('/mainPage')
+      }
+    },
+    async EventSignIn() {
+      const res = await this.ACTION_SINGIN()
+      window.console.log(res.success)
+      if (res.success) {
+        window.console.log(JSON.stringify(this.GET_USER))
+        this.$cookies.set('cookie-name', this.GET_USER, {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 7,
+        })
+        this.$router.push('/mainPage')
+      }
     },
   },
 }

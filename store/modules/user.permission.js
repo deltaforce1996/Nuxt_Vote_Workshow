@@ -34,6 +34,9 @@ export default {
         window.console.log(response)
       }
     },
+    ACTION_USER_COKKIE({ commit }, user) {
+      commit('SINGIN', user)
+    },
   },
   getters: {
     GET_USER_SINGIN(state) {
