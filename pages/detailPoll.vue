@@ -14,35 +14,52 @@
     <div>
       <h1 class="title-main">what to eat ?</h1>
     </div>
-    <div class="text-name">
-      <span class="poll-title">เที่ยงนี้กินไรดี</span>
-    </div>
-    <div class="text-name">
-      <span class="poll-title">ข้าวผัด</span>     
-    </div>
-    <div>
-      <span class="poll-title">ส้มตำ</span>
-    </div>
-    <div>
-      <span class="poll-title">ก๊วยเตี๊ยว</span>
-    </div>
-    <div>
-      <span class="poll-title">ยำวุ้นเส้น</span>
-    </div>
-    <div>
+    <div
+      v-for="(item, index) in GET_POLE_BYID($route.query.PollId)"
+      :key="index"
+    >
+      <div class="text-name">
+        <span class="poll-title"></span>
+      </div>
+      <div v-for="(Option, i) in item.Options" :key="i">
+        <div class="text-name">
+          <span class="poll-title">{{ Option }}</span>
+        </div>
+      </div>
+      <div>
         <label for="timer">Set Time :</label>
-        <span class="poll-time" >20 นาที</span>
+        <span class="poll-time"
+          >{{ getTime(item.TimeStamp, item.Exp) }} นาที</span
+        >
+      </div>
     </div>
   </div>
 </template>
+
 <script>
+import { mapGetters } from 'vuex'
 export default {
+  data() {
+    return {}
+  },
+  computed: {
+    ...mapGetters({
+      GET_POLE_BYID: 'MODULE_POLE/GET_POLE_BYID',
+    }),
+  },
+  mounted() {},
   methods: {
     getLogout() {
       this.$router.push('/LoginPage')
     },
     getToEdit() {
       this.$router.push('/addPoll')
+    },
+    getTime(start, end) {
+      let delta = Math.abs(end - start) / 1000
+      const minutes = Math.floor(delta / 60) % 60
+      delta -= minutes * 60
+      return Math.floor(delta)
     },
   },
 }

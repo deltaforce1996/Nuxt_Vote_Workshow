@@ -84,7 +84,7 @@ export default {
     GET_POLES(state) {
       return state.ListPoles
     },
-    GET_POLE_BYID(state, PoleId) {
+    GET_POLE_BYID: (state) => (PoleId) => {
       return state.ListPoles.filter((el) => el.PoleId === PoleId)
     },
   },
