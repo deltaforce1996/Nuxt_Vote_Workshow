@@ -25,6 +25,7 @@
     <div v-for="(item, index) in GET_POLES" :key="index">
       <div class="text-name">
         <span class="poll-title">{{ item.PoleName }}</span>
+        <span class="poll-title">Amount {{ item.Voits.length }}</span>
         <span class="time-end"> (11.45 นาที)</span>
         <button class="btn-add-poll" @click="getToDetail(item.PoleId)">
           Detail
@@ -87,8 +88,7 @@ export default {
       if (!this.EventValidatetion()) return // Notify Here
       const res = await this.ACTION_FETCH_LISTPOLES()
       if (res.success) {
-        window.console.log(res.massage)
-        window.console.log(JSON.stringify(this.GET_POLES))
+        window.console.log(res.massage) // Notify Here
       }
     },
     EventValidatetion() {
@@ -100,10 +100,10 @@ export default {
     },
     EventLogVoite(ArrOptions, RefId, Exp) {
       if (!this.EventValidatetion()) return
-      if (Date.now() > Exp) {
-        // Notify Here
-        return
-      }
+      // if (Date.now() > Exp) {
+      //   // Notify Here
+      //   return
+      // }
       this.IsLogOpen = true
       this.Options = ArrOptions
       this.PoleRefId = RefId

@@ -98,6 +98,7 @@ export default {
         this.OptionName = ''
         this.$emit('LisenerSuccess')
       } else {
+        window.console.log(res.massage)
         // Notify Here
       }
     },

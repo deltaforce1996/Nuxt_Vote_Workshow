@@ -4,14 +4,18 @@ const GoogleAuthSingIn = async () => {
   const provider = new firebase.auth.GoogleAuthProvider()
   const result = await firebase.auth().signInWithPopup(provider)
   const credential = result.credential
-  const token = credential.accessToken
-  window.console.log(token)
+  // const token = credential.accessToken
+  // window.console.log(token)
   const user = result.user
   if (user.emailVerified) {
     return {
       token: credential.accessToken,
       success: user.emailVerified,
       user: new Voites(await GetUidSingIn(), user.displayName),
+    }
+  } else {
+    return {
+      success: false,
     }
   }
 }
